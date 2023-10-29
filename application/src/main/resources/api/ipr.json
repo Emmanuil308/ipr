@@ -1,0 +1,233 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Ipr API",
+    "version": "0.1",
+    "description": "CRUD-сервис для выполнения ИПР.",
+    "contact": {
+      "email": "kplaksin@solit-clouds.ru"
+    }
+  },
+  "tags": [
+    {
+      "name": "Ipr",
+      "description": "ИПР Плаксин К.А."
+    }
+  ],
+  "paths": {
+    "/api/ipr/create": {
+      "post": {
+        "operationId": "apiCreate",
+        "tags": [
+          "Ipr"
+        ],
+        "summary": "Метод создает объект.",
+        "parameters": [],
+        "requestBody": {
+          "description": "Параметры метода",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение операции",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateDeleteResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Сервис не отвечает",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateDeleteResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ipr/read": {
+      "get": {
+        "operationId": "apiRead",
+        "tags": [
+          "Ipr"
+        ],
+        "summary": "Метод получает все сущности.",
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение операции",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IprResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Сервис не отвечает",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IprResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ipr/logs": {
+      "get": {
+        "operationId": "apiLogs",
+        "tags": [
+          "Ipr"
+        ],
+        "summary": "Метод получает логи.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение операции",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Сервис не отвечает",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "message": {
+            "type": "string"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isOK": {
+            "type": "boolean"
+          },
+          "someDate": {
+            "type": "string",
+            "format": "date",
+            "example": "01-01-2001"
+          },
+          "dual": {
+            "$ref": "#/components/schemas/DualClass"
+          }
+        },
+        "required": ["message", "number", "isOK", "someDate"]
+      },
+      "CreateDeleteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-01-02T00:00"
+          }
+        }
+      },
+      "IprResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/IprInner"
+        }
+      },
+      "LogResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2021-01-02T00:00"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "DualClass": {
+        "type": "object",
+        "properties": {
+          "stringField": {
+            "type": "string"
+          },
+          "longField": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "IprInner": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "message": {
+            "type": "string"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isOK": {
+            "type": "boolean"
+          },
+          "someDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2021-01-02"
+          },
+          "dual": {
+            "$ref": "#/components/schemas/DualClass"
+          }
+        }
+      }
+    }
+  }
+}

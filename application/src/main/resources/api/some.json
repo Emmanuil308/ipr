@@ -1,0 +1,172 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Ipr API",
+    "version": "0.1",
+    "description": "CRUD-сервис для выполнения ИПР (дополнительный).",
+    "contact": {
+      "email": "kplaksin@solit-clouds.ru"
+    }
+  },
+  "tags": [
+    {
+      "name": "Some",
+      "description": "ИПР Плаксин К.А. (Сущность для Связей)"
+    }
+  ],
+  "paths": {
+    "/api/some/create": {
+      "get": {
+        "operationId": "apiSomeCreate",
+        "tags": [
+          "Some"
+        ],
+        "parameters": [
+          {
+            "name": "iprId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "field1",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "field2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "meta",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение операции",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSomeResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Сервис не отвечает",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSomeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/some/{ipr}": {
+      "get": {
+        "operationId": "apiSomeGetByIpr",
+        "tags": [
+          "Some"
+        ],
+        "parameters": [
+          {
+            "name": "ipr",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное выполнение операции",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ByIprResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Сервис не отвечает",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ByIprResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateSomeResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "message": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "ByIprResponse": {
+        "type": "object",
+        "properties": {
+          "ipr": {
+            "$ref": "ipr.json#/components/schemas/IprInner"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Some"
+            }
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "Some": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "field1": {
+            "type": "string"
+          },
+          "field2": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

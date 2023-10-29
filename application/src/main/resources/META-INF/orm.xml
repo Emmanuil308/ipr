@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm">
+    <description>ORM</description>
+
+    <sequence-generator name="ipr_id_seq"
+                        allocation-size="1"
+                        sequence-name="ipr_id_seq"
+                        initial-value="1" />
+
+    <sequence-generator name="some_table_id_seq"
+                        allocation-size="1"
+                        sequence-name="some_table_id_seq"
+                        initial-value="1" />
+
+    <entity class="docker.domain.ipr.model.Ipr" access="FIELD" >
+        <table name="ipr"/>
+        <attributes>
+            <id name="id">
+                <column name="id"/>
+                <generated-value strategy="SEQUENCE" generator="ipr_id_seq" />
+            </id>
+            <basic name="message">
+                <column name="message" nullable="true" />
+            </basic>
+            <basic name="number">
+                <column name="number" nullable="true" />
+            </basic>
+            <basic name="isOK">
+                <column name="is_ok" nullable="true" />
+            </basic>
+            <basic name="someDate">
+                <column name="some_date" nullable="true" />
+            </basic>
+            <basic name="dual">
+                <column name="dual" nullable="true"/>
+                <convert converter="docker.application.common.DualConverter"/>
+            </basic>
+            <one-to-many name="some" target-entity="docker.domain.ipr.model.Some" mapped-by="ipr" fetch="LAZY">
+                <cascade><cascade-all/></cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+
+    <entity class="docker.domain.ipr.model.Some" access="FIELD" >
+        <table name="some_table"/>
+        <attributes>
+            <id name="id">
+                <column name="id"/>
+                <generated-value strategy="SEQUENCE" generator="some_table_id_seq" />
+            </id>
+            <basic name="field1">
+                <column name="field_1" nullable="true"/>
+            </basic>
+            <basic name="field2">
+                <column name="field_2" nullable="true" />
+            </basic>
+            <many-to-one name="ipr" target-entity="docker.domain.ipr.model.Ipr" fetch="EAGER">
+                <join-column name="ipr_id" nullable="false" />
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>
